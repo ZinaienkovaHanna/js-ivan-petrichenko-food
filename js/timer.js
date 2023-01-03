@@ -1,3 +1,5 @@
+window.addEventListener('DOMContentLoaded', () => {
+
 const deadline = '2022-04-01';
 
 function getTimeRemaining(endtime) {
@@ -61,3 +63,5 @@ function setClock(selector, endtime) {
 }
 
 setClock('.timer', deadline);
+
+});
