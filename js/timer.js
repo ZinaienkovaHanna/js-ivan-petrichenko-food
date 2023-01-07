@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
 
-const deadline = '2022-04-01';
+const deadline = '2023-04-01';
 
 function getTimeRemaining(endtime) {
     let days, hours, minutes, seconds;
