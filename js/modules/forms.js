@@ -1,57 +1,7 @@
-window.addEventListener('DOMContentLoaded', () => {
-
-    //modal
-
-    const modalTrigger = document.querySelectorAll('[data-modal]'),
-        modal = document.querySelector('.modal');
-
-    function openModal() {
-        // modal.classList.add('hade');
-        // modal.classList.remove('show');
-        modal.classList.toggle('show');
-        document.body.style.overflow = '';
-        clearInterval(modalTimerId);
-    }
-
-    modalTrigger.forEach(btn => {
-        btn.addEventListener('click', openModal)
-    });
-    
-    function closeModal() {
-        // modal.classList.add('hade');
-        // modal.classList.remove('show');
-        modal.classList.toggle('show');
-        document.body.style.overflow = '';
-    };
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal || e.target.getAttribute('data-close') == '') {
-            closeModal();
-        }
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.code === "Escape" && modal.classList.contains('show')) {
-            closeModal();
-        }
-    });
-
-    const modalTimerId = setTimeout(openModal, 50000);
-
-    function showModalByScroll() {
-        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-            openModal();
-            window.removeEventListener('scroll', showModalByScroll);
-        }
-    }
-
-    window.addEventListener('scroll', showModalByScroll);
-
-
-
-    //forms
-
-    const forms = document.querySelectorAll('form');
+import {closeModal, openModal} from './modal';
+import {postData} from '../services/services';
+function forms(formsSelector, modalTimerId) {
+    const forms = document.querySelectorAll(formsSelector);
     const message = {
         loading: 'img/form/spinner.svg',
         success: 'Спасибо! Скоро мы с вами свяжемся',
@@ -61,18 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
     forms.forEach(item => {
         bindPostData(item);
     });
-
-    const postData = async (url, data) => {
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: data
-        });
-
-        return await res.json();
-    };
 
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
@@ -107,7 +45,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const prevModalDialog = document.querySelector('.modal__dialog');
 
         prevModalDialog.classList.add('hide');
-        openModal();
+        openModal('.modal', modalTimerId);
 
         const thanksModal = document.createElement('div');
         thanksModal.classList.add('modal__dialog');
@@ -122,8 +60,9 @@ window.addEventListener('DOMContentLoaded', () => {
             thanksModal.remove();
             prevModalDialog.classList.add('show');
             prevModalDialog.classList.remove('hide');
-            closeModal();
+            closeModal('.modal');
         }, 4000);
     }
+}
 
-});
+export default forms;

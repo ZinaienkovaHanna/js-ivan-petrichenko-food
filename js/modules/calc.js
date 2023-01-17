@@ -1,6 +1,4 @@
-// const e = require("express");
-
-window.addEventListener('DOMContentLoaded', () => {
+function calc() {
 
     const result = document.querySelector('.calculating__result span');
 
@@ -113,4 +111,6 @@ window.addEventListener('DOMContentLoaded', () => {
     getDynamicInformation('#weight');
     getDynamicInformation('#age');
 
-});
+};
+
+export default calc;
